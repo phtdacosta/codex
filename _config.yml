@@ -1,5 +1,6 @@
 name: "teo's codex"
 description: "Programming, engineering, robotics, defense, philosophy and experiments"
+author: "teo"
 
 url: '' 
 baseurl: ''
@@ -26,4 +27,3 @@ destination: ./_site
 sass:
     style: :compressed
     sass_dir: assets/css/
-
