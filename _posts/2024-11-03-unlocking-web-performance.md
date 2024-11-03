@@ -19,7 +19,7 @@ In the fast-paced world of web development, performance is king. Users demand qu
 
 ## What is Perf.link?
 
-[Perf.link](https://github.com/lukejacksonn/perflink) is an open source performance monitoring and analysis tool designed to provide developers with real-time insights into their web applications. Running small Javascript snippets and visualizing how their performance compare to each other, it allows developers to rapidly identify bottlenecks and greatly optimize their code.
+Perf.link is an open source performance monitoring and analysis tool ([Github link to Perf.link's repository](https://github.com/lukejacksonn/perflink)) designed to provide developers with real-time insights into their web applications. Running small Javascript snippets and visualizing how their performance compare to each other, it allows developers to rapidly identify bottlenecks and greatly optimize their code.
 
 ## Practical use cases for Perf.link
 
