@@ -9,10 +9,10 @@ date:   2024-11-03 1:00:40 +0500
 - [Practical use cases for Perf.link](#practical-use-cases-for-perflink)
   - [1. Identifying load time bottlenecks](#1-identifying-load-time-bottlenecks)
   - [2. Monitoring API performance](#2-monitoring-api-performance)
-  - [3. Comparative analysis (with examples)](#4-comparative-analysis)
-  - [4. Debugging performance issues](#5-debugging-performance-issues)
-  - [5. Stress testing](#6-stress-testing)
-  - [6. Historical data analysis](#7-historical-data-analysis)
+  - [3. Comparative analysis (with examples)](#3-comparative-analysis)
+  - [4. Debugging performance issues](#4-debugging-performance-issues)
+  - [5. Stress testing](#5-stress-testing)
+  - [6. Historical data analysis](#6-historical-data-analysis)
 - [Conclusion](#conclusion)
 
 In the fast-paced world of web development, performance is king. Users demand quick load times and seamless interactions, making it essential for developers to optimize their applications effectively. Enter **Perf.link**—a powerful tool that every web developer should have in their toolkit. In this article, we'll explore what Perf.link is, its key features, practical use cases, and why it deserves a prominent place in your development arsenal.
