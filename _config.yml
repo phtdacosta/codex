@@ -1,5 +1,5 @@
-name: "Jekyll true minimal theme"
-description: "Lightweight theme"
+name: "teo's codex"
+description: "Programming, engineering, robotics, defense, philosophy and experiments"
 
 url: '' 
 baseurl: ''
@@ -14,6 +14,7 @@ kramdown:
 
 plugins:
   - jekyll-paginate
+  - jekyll-feed
 paginate: 10
 paginate_path: /page-:num
 

@@ -1,6 +1,26 @@
 <!DOCTYPE html>
 <html>
+<style type="text/css">
+    html {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Arial", sans-serif;
+    }
+    img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 100%; /* optional: to make it responsive */
+      max-height: 600px;
+    }
 
+    body {margin: 0 20%}
+
+    @media (max-width: 600px) {
+        body {margin: 0}
+    }
+</style>
 <head>
     <meta charset='utf-8'>
     <title>
@@ -16,14 +36,16 @@
     {% endif %}
     
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-
 </head>
 
 <body>
     {% include header.html %}
 
     {{ content }}
-<hr>
-    <p><small> <i>Build with <a href="https://jekyllrb.com/">Jekyll</a> and  <a href="https://github.com/cyevgeniy/jekyll-true-minimal/">true minimal theme</a></i> </small></p>
+
+<!--     <hr>
+    <p>
+        <small><i>Build with <a href="https://jekyllrb.com/">Jekyll</a> and  <a href="https://github.com/cyevgeniy/jekyll-true-minimal/">true minimal theme</a></i> </small>
+    </p> -->
 </body>
 </html>
