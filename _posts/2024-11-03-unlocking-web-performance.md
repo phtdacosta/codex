@@ -19,21 +19,21 @@ In the fast-paced world of web development, performance is king. Users demand qu
 
 ## What is Perf.link?
 
-[Perf.link](https://github.com/lukejacksonn/perflink) is an open source performance monitoring and analysis tool designed to provide developers with real-time insights into their web applications. By collecting and visualizing performance data, it allows developers to rapidly identify bottlenecks and optimize their code, ultimately enhancing user experience.
+[Perf.link](https://github.com/lukejacksonn/perflink) is an open source performance monitoring and analysis tool designed to provide developers with real-time insights into their web applications. Running small Javascript snippets and visualizing how their performance compare to each other, it allows developers to rapidly identify bottlenecks and greatly optimize their code.
 
 ## Practical use cases for Perf.link
 
 ### 1. Identifying load time bottlenecks
 
-One of the most common issues web developers face is slow load times. Perf.link helps you to break down, test, compare and pinpoint specific elements causing delays, whether they're large images, inefficient scripts, or poorly optimized APIs.
+One of the most common issues web developers face is slow load times. Perf.link helps you to break down, test, compare and pinpoint specific elements causing delays, whether they're, inefficient scripts or poorly optimized APIs.
 
 ### 2. Monitoring API performance
 
-For applications that rely heavily on APIs, understanding response times is crucial. Perf.link allows developers to run customizable API calls in real time and compare the results, making it easier to identify slow endpoints and optimize them for better performance.
+For applications that rely heavily on APIs, understanding response times is crucial. Perf.link allows developers to run API calls in real time and compare the results, making it easier to identify slow endpoints and optimize them for better performance.
 
 ### 3. Comparative analysis (with examples)
 
-Perf.link enables you to compare performance metrics across different versions of your application. This is invaluable for assessing the impact of new features or optimizations before deploying them to production.
+Perf.link enables you to compare performance metrics across different versions of your application on different browser engines. This is invaluable for assessing the impact of new features or optimizations before deploying them to production.
 
 Here is a side by side comparison of how different loops perform under the same browser engine (on Firefox 132.0 64-bit), incrementing by 1 each element the following array of 500 numbers.
 
