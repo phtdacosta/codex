@@ -222,7 +222,7 @@ pre code{background:none;border:0;padding:0;color:var(--ink);font-size:inherit;}
 .tag-list a{color:var(--ink);} .tag-list a:hover{color:var(--rubric);}
 
 /* ---- footer (centered, minimal) ---- */
-.site-footer{flex-shrink:0;border-top:1px solid var(--rule);margin-top:clamp(3rem,8vw,5rem);padding-block:2rem 3rem;text-align:left;}
+.site-footer{flex-shrink:0;border-top:1px solid var(--rule);margin-top:clamp(3rem,8vw,5rem);padding-block:2rem 3rem;text-align:right;}
 .footer-motto{font-family:var(--serif);font-style:italic;color:var(--ink-soft);font-size:1rem;}
 .footer-meta{margin-top:.7rem;font-family:var(--serif);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);}
 .footer-meta a{color:var(--ink-soft);}
