@@ -1,0 +1,13 @@
+---
+layout: default
+---
+<div class="wrap">
+  <header class="page-header">
+    {%- unless page.hide_title %}<h1 class="page-title">{{ page.title }}</h1>{% endunless %}
+    {%- if page.subtitle %}<p class="mono">{{ page.subtitle }}</p>{% endif %}
+    <div class="head-sep"></div>
+  </header>
+  <div class="prose">
+    {{ content }}
+  </div>
+</div>

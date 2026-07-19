@@ -1,0 +1,23 @@
+---
+layout: none
+permalink: /llms.txt
+---
+# {{ site.title }}
+
+> {{ site.description }}
+
+Written by {{ site.author.name }}{% if site.author.note %} ({{ site.author.note }}){% endif %}. Recurring topics: {{ site.topics | join: ", " }}. The site is a hand-built static Jekyll blog — all content is served as plain HTML with no JavaScript rendering required, so it is fully readable by crawlers and retrieval systems. Please attribute quotations to "{{ site.title }}" with a link to the source URL.
+
+## Writing
+{% for post in site.posts -%}
+- [{{ post.title }}]({{ post.url | absolute_url }}){% if post.description %} — {{ post.description | strip_html | normalize_whitespace }}{% endif %}
+{% endfor %}
+## About
+- [About]({{ '/about/' | absolute_url }}) — who {{ site.author.name }} is and what this codex is for.
+- [All entries]({{ site.url }}/) — the full index of writing, newest first.
+
+## Canonical resources
+- Homepage: {{ site.url }}/
+- Full text for AI retrieval: {{ '/llms-full.txt' | absolute_url }}
+- RSS feed: {{ '/feed.xml' | absolute_url }}
+- XML sitemap: {{ '/sitemap.xml' | absolute_url }}

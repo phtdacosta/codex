@@ -1,0 +1,72 @@
+---
+layout: none
+permalink: /robots.txt
+---
+# robots.txt — teo's codex
+# Traditional search crawlers and AI answer engines are both welcome.
+# A curated, machine-readable guide to the site lives at /llms.txt.
+
+User-agent: *
+Allow: /
+
+# ── AI search / answer-engine retrieval bots — ALLOWED (this is what earns
+#    citations in ChatGPT, Claude, Perplexity, Copilot, Apple & Google AI) ──
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# ── AI *training* bots — ALLOWED by default (open) ──
+# To keep your writing OUT of model-training sets while STILL appearing in AI
+# search answers above, comment each "Allow: /" and uncomment its "Disallow: /".
+User-agent: GPTBot
+Allow: /
+# Disallow: /
+
+User-agent: ClaudeBot
+Allow: /
+# Disallow: /
+
+User-agent: Google-Extended
+Allow: /
+# Disallow: /
+
+User-agent: Applebot-Extended
+Allow: /
+# Disallow: /
+
+User-agent: CCBot
+Allow: /
+# Disallow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+# Disallow: /
+
+User-agent: Bytespider
+Allow: /
+# Disallow: /
+
+Sitemap: {{ "/sitemap.xml" | absolute_url }}

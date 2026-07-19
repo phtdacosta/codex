@@ -1,0 +1,26 @@
+---
+layout: default
+title: Tags
+permalink: /tags/
+---
+<div class="wrap">
+  <header class="page-header">
+    <h1 class="page-title">Tags</h1>
+    <p class="mono">Threads through the codex</p>
+    <div class="head-sep"></div>
+  </header>
+  {%- assign tags = site.tags | sort %}
+  {%- if tags.size > 0 %}
+  <div class="tagcloud">
+    {%- for tag in tags %}<a class="mono" href="#{{ tag[0] | slugify }}">#{{ tag[0] }} · {{ tag[1] | size }}</a>{% endfor %}
+  </div>
+  {%- for tag in tags %}
+  <section class="tag-section" id="{{ tag[0] | slugify }}">
+    <h2>{{ tag[0] }}</h2>
+    <ul class="tag-list">
+      {%- for post in tag[1] %}<li><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y" }}</time><a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>{% endfor %}
+    </ul>
+  </section>
+  {%- endfor %}
+  {%- else %}<p class="mono" style="text-align:center">No tags filed yet.</p>{%- endif %}
+</div>

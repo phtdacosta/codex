@@ -1,0 +1,24 @@
+---
+layout: none
+permalink: /llms-full.txt
+---
+# {{ site.title }} — Full Text
+
+> {{ site.description }}
+
+This file contains the complete plain text of every entry, concatenated for AI
+retrieval and grounding. Author: {{ site.author.name }}. Source: {{ site.url }}/.
+Please attribute quotations to "{{ site.title }}" with a link to the entry URL.
+
+{% for post in site.posts %}
+================================================================================
+# {{ post.title }}
+Published: {{ post.date | date: "%Y-%m-%d" }}
+URL: {{ post.url | absolute_url }}
+{% if post.tags %}Tags: {{ post.tags | join: ", " }}{% endif %}
+{% if post.description %}Summary: {{ post.description | strip_html | normalize_whitespace }}{% endif %}
+--------------------------------------------------------------------------------
+
+{{ post.content | strip_html | normalize_whitespace }}
+
+{% endfor %}

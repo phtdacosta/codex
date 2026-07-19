@@ -1,0 +1,11 @@
+{%- if site.kofi -%}
+<script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
+<script>
+  kofiWidgetOverlay.draw('{{ site.kofi }}', {
+    'type': 'floating-chat',
+    'floating-chat.donateButton.text': 'Support',
+    'floating-chat.donateButton.background-color': '#8f2417',
+    'floating-chat.donateButton.text-color': '#ffffff'
+  });
+</script>
+{%- endif -%}

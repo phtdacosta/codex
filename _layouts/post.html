@@ -1,11 +1,59 @@
 ---
 layout: default
 ---
-<h1>{{ page.title }}{{ page.shortUrl }}</h1>
-<p>{{ page.date | date: "%b %-d, %Y" }}</p>
-<div class='separator'></div>
-        
-{{ content }}
-        
-{% if site.disqus-id %} {% include comments.html %} {% endif %}
+<article class="wrap">
 
+  <div class="record">
+    <span>Codex</span><span class="s">//</span>
+    {%- if page.ref %}<span class="r">Ref&nbsp;{{ page.ref }}</span><span class="s">//</span>{% endif %}
+    <span>Filed&nbsp;{{ page.date | date: "%Y.%m.%d" }}</span><span class="s">//</span>
+    {%- if page.tags.first %}<span>{{ page.tags.first }}</span><span class="s">//</span>{% endif %}
+    <span>{% include reading-time.html content=content %}</span>
+  </div>
+
+  <h1 class="post-title">{{ page.title }}</h1>
+  <div class="byline">{{ site.author.name }}{% if site.author.note %} <b>—</b> {{ site.author.note }}{% endif %}</div>
+  <div class="head-sep"></div>
+
+  {%- if page.image %}
+  {%- if page.image contains "://" %}{% assign hero_src = page.image %}{% else %}{% assign hero_src = page.image | relative_url %}{% endif %}
+  <figure class="post-hero">
+    <img src="{{ hero_src }}" alt="{{ page.image_alt | default: page.title | escape }}"{% if page.image_width and page.image_height %} width="{{ page.image_width }}" height="{{ page.image_height }}"{% endif %} decoding="async"{% if page.image_priority %} fetchpriority="high"{% endif %}>
+    {%- if page.image_caption %}<figcaption>{{ page.image_caption }}</figcaption>{% endif %}
+  </figure>
+  {%- endif %}
+
+  {% include toc.html content=content toc=page.toc %}
+
+  <div class="post-body prose">
+    {{ content }}
+  </div>
+
+  <div class="post-foot">
+    <div class="head-sep"></div>
+
+    {%- if page.tags %}
+    <div class="tags">
+      {%- for tag in page.tags %}<a href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">{{ tag }}</a>{% endfor %}
+    </div>
+    {%- endif %}
+
+    {%- if site.kofi %}
+    <p class="tip">If this was worth your time, you can <a href="https://ko-fi.com/{{ site.kofi }}" rel="noopener" target="_blank"><b>buy me a coffee</b></a> — it keeps the archive open.</p>
+    {%- endif %}
+
+    <div class="end-mark" aria-hidden="true"></div>
+
+    {%- if page.previous or page.next %}
+    <nav class="pager" aria-label="More writing">
+      {%- if page.next %}
+      <a class="prev" href="{{ page.next.url | relative_url }}"><span class="dir">Newer</span><span class="ptitle">{{ page.next.title }}</span></a>
+      {%- endif %}
+      {%- if page.previous %}
+      <a class="next" href="{{ page.previous.url | relative_url }}"><span class="dir">Older</span><span class="ptitle">{{ page.previous.title }}</span></a>
+      {%- endif %}
+    </nav>
+    {%- endif %}
+  </div>
+
+</article>

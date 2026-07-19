@@ -1,0 +1,157 @@
+{%- comment -%} ---- derived values ---- {%- endcomment -%}
+{%- if page.title -%}
+  {%- assign page_title = page.title | append: " · " | append: site.title -%}
+{%- else -%}
+  {%- assign page_title = site.title | append: " — " | append: site.tagline -%}
+{%- endif -%}
+{%- assign desc = page.description | default: page.excerpt | default: site.description -%}
+{%- assign desc = desc | strip_html | normalize_whitespace | truncate: 200 -%}
+{%- assign canonical = page.url | replace: "index.html", "" | absolute_url -%}
+{%- if page.image contains "://" -%}{%- assign og_image = page.image -%}
+{%- elsif page.image -%}{%- assign og_image = page.image | absolute_url -%}
+{%- else -%}{%- assign og_image = site.og_image | absolute_url -%}{%- endif -%}
+{%- assign og_ext = og_image | split: "?" | first | split: "." | last | downcase -%}
+{%- if og_ext == "jpg" or og_ext == "jpeg" -%}{%- assign og_mime = "image/jpeg" -%}
+{%- elsif og_ext == "webp" -%}{%- assign og_mime = "image/webp" -%}
+{%- elsif og_ext == "gif" -%}{%- assign og_mime = "image/gif" -%}
+{%- else -%}{%- assign og_mime = "image/png" -%}{%- endif -%}
+{%- if page.image -%}{%- assign og_w = page.image_width -%}{%- assign og_h = page.image_height -%}
+{%- else -%}{%- assign og_w = 1200 -%}{%- assign og_h = 630 -%}{%- endif -%}
+{%- if page.layout == "post" -%}{%- assign og_type = "article" -%}{%- else -%}{%- assign og_type = "website" -%}{%- endif -%}
+{%- assign lang_og = site.lang | replace: "-", "_" -%}
+{%- assign wcount = page.content | strip_html | number_of_words -%}
+{%- assign rmin = wcount | divided_by: 200.0 | ceil -%}{%- if rmin < 1 -%}{%- assign rmin = 1 -%}{%- endif -%}
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>{{ page_title }}</title>
+<meta name="description" content="{{ desc | escape }}">
+<link rel="canonical" href="{{ canonical }}">
+{%- if page.noindex %}
+<meta name="robots" content="noindex, nofollow">
+{%- else %}
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+{%- endif %}
+<meta name="author" content="{{ site.author.name }}">
+<meta name="generator" content="Jekyll">
+{%- if site.webmaster_verify.google and site.webmaster_verify.google != "" %}
+<meta name="google-site-verification" content="{{ site.webmaster_verify.google }}">{% endif %}
+{%- if site.webmaster_verify.bing and site.webmaster_verify.bing != "" %}
+<meta name="msvalidate.01" content="{{ site.webmaster_verify.bing }}">{% endif %}
+<link rel="alternate" hreflang="{{ site.lang }}" href="{{ canonical }}">
+<link rel="alternate" hreflang="x-default" href="{{ canonical }}">
+{%- if paginator %}
+{%- if paginator.previous_page %}<link rel="prev" href="{{ paginator.previous_page_path | absolute_url }}">{% endif %}
+{%- if paginator.next_page %}<link rel="next" href="{{ paginator.next_page_path | absolute_url }}">{% endif %}
+{%- endif %}
+
+{%- comment -%} ---- theme colour (both schemes) + flash-free bootstrap ---- {%- endcomment -%}
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#eae8e1">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0a0b">
+<script>(function(){try{var t=localStorage.getItem('codex-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<style>html{background:#eae8e1;color-scheme:light}html[data-theme="dark"]{background:#0a0a0b;color-scheme:dark}@media (prefers-color-scheme:dark){html:not([data-theme="light"]){background:#0a0a0b;color-scheme:dark}}</style>
+
+{%- comment -%} ---- Open Graph ---- {%- endcomment -%}
+<meta property="og:type" content="{{ og_type }}">
+<meta property="og:site_name" content="{{ site.title }}">
+<meta property="og:locale" content="{{ lang_og }}">
+<meta property="og:url" content="{{ canonical }}">
+<meta property="og:title" content="{{ page.title | default: site.title | escape }}">
+<meta property="og:description" content="{{ desc | escape }}">
+<meta property="og:image" content="{{ og_image }}">
+<meta property="og:image:alt" content="{{ page.image_alt | default: site.title | escape }}">
+{%- if og_w and og_h %}
+<meta property="og:image:width" content="{{ og_w }}">
+<meta property="og:image:height" content="{{ og_h }}">
+{%- endif %}
+<meta property="og:image:type" content="{{ og_mime }}">
+{%- if page.layout == "post" %}
+<meta property="og:updated_time" content="{{ page.last_modified_at | default: page.date | date_to_xmlschema }}">
+<meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}">
+{%- if page.last_modified_at %}<meta property="article:modified_time" content="{{ page.last_modified_at | date_to_xmlschema }}">{% endif %}
+<meta property="article:author" content="{{ site.author.name }}">
+{%- for tag in page.tags %}<meta property="article:tag" content="{{ tag | escape }}">{% endfor %}
+{%- endif %}
+
+{%- comment -%} ---- Twitter ---- {%- endcomment -%}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ page.title | default: site.title | escape }}">
+<meta name="twitter:description" content="{{ desc | escape }}">
+<meta name="twitter:image" content="{{ og_image }}">
+<meta name="twitter:image:alt" content="{{ page.image_alt | default: site.title | escape }}">
+{%- if site.twitter.username %}<meta name="twitter:site" content="@{{ site.twitter.username }}">
+<meta name="twitter:creator" content="@{{ site.twitter.username }}">{% endif %}
+
+{%- comment -%} ---- JSON-LD (values via | jsonify for safe escaping) ---- {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": {{ site.url | append: "/#website" | jsonify }},
+      "name": {{ site.title | jsonify }},
+      "url": {{ site.url | append: "/" | jsonify }},
+      "description": {{ site.description | jsonify }},
+      "inLanguage": {{ site.lang | jsonify }},
+      "publisher": { "@id": {{ site.url | append: "/#person" | jsonify }} }
+    },
+    {
+      "@type": "Person",
+      "@id": {{ site.url | append: "/#person" | jsonify }},
+      "name": {{ site.author.name | jsonify }},
+      "url": {{ site.url | append: "/" | jsonify }},
+      "sameAs": [
+        {{ "https://x.com/" | append: site.twitter.username | jsonify }},
+        {{ "https://github.com/" | append: site.social.github | jsonify }}
+      ]
+    }
+    {%- if page.layout == "post" -%},
+    {
+      "@type": "BlogPosting",
+      "@id": {{ canonical | append: "#article" | jsonify }},
+      "headline": {{ page.title | jsonify }},
+      "description": {{ desc | jsonify }},
+      "url": {{ canonical | jsonify }},
+      "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
+      "dateModified": {{ page.last_modified_at | default: page.date | date_to_xmlschema | jsonify }},
+      "inLanguage": {{ site.lang | jsonify }},
+      "image": {{ og_image | jsonify }},
+      "author": { "@id": {{ site.url | append: "/#person" | jsonify }} },
+      "publisher": { "@id": {{ site.url | append: "/#person" | jsonify }} },
+      "mainEntityOfPage": { "@type": "WebPage", "@id": {{ canonical | jsonify }} },
+      "isPartOf": { "@id": {{ site.url | append: "/#website" | jsonify }} },
+      "articleSection": {{ page.tags.first | default: "Essays" | jsonify }},
+      "wordCount": {{ wcount }},
+      "timeRequired": {{ rmin | prepend: "PT" | append: "M" | jsonify }},
+      "keywords": {{ page.tags | join: ", " | jsonify }}
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": {{ site.title | jsonify }}, "item": {{ site.url | append: "/" | jsonify }} },
+        { "@type": "ListItem", "position": 2, "name": {{ page.title | jsonify }} }
+      ]
+    }
+    {%- endif -%}
+  ]
+}
+</script>
+
+{%- comment -%} ---- icons ---- {%- endcomment -%}
+<link rel="icon" href="{{ '/assets/favicon.ico' | relative_url }}" sizes="any">
+<link rel="apple-touch-icon" href="{{ '/assets/favicon.ico' | relative_url }}">
+
+{%- comment -%} ---- feeds ---- {%- endcomment -%}
+<link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | absolute_url }}">
+<link rel="sitemap" type="application/xml" href="{{ '/sitemap.xml' | absolute_url }}">
+
+{%- comment -%} ---- fonts (Newsreader; system mono for small metadata) ---- {%- endcomment -%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&display=swap" rel="stylesheet">
+
+{%- if site.github.build_revision -%}{%- assign cssver = site.github.build_revision -%}{%- else -%}{%- assign cssver = site.time | date: '%s' -%}{%- endif -%}
+<link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}?v={{ cssver }}">
+</head>

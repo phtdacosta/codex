@@ -1,29 +1,67 @@
-name: "teo's codex"
-description: "Programming, engineering, robotics, defense, philosophy and experiments"
-author: "teo"
+# ── teo's codex ───────────────────────────────────────────────
+title:        "teo's codex"
+tagline:      "gradatim per vitam"
+description:  "Essays and experiments on programming, engineering, robotics, defense, philosophy, and entrepreneurship — kept as a codex by teo."
+url:          "https://teocos.com"
+baseurl:      ""
+lang:         "en"
+timezone:     "America/Sao_Paulo"
 
-url: '' 
-baseurl: ''
+# ── identity / links ──────────────────────────────────────────
+author:
+  name:     "teo"
+  note:     "e/acc"
+  url:      "https://x.com/phteocos"
+twitter:
+  username: "phteocos"
+social:
+  github:   "teocos"        # ← update to your GitHub username if different
+  twitter:  "phteocos"
+email:      ""              # optional — shown in the footer if set
+kofi:       "teocos"        # Ko-fi username (button colour #003500)
+google_analytics: "G-LR2601DRCQ"
+og_image:   "/assets/img/og-default.png"
 
+# Search-engine verification — paste tokens when you claim the site (optional)
+webmaster_verify:
+  google:   ""    # Google Search Console
+  bing:     ""    # Bing Webmaster Tools
+
+# topics surfaced on the About page / used as suggested tags
+topics:
+  - programming
+  - engineering
+  - robotics
+  - defense
+  - philosophy
+  - entrepreneurship
+
+# ── build ─────────────────────────────────────────────────────
 markdown: kramdown
-markdown_ext: "markdown,mkdown,mkdn,mkd,md"
-highlighter: rouge
-
 kramdown:
   input: GFM
   syntax_highlighter: rouge
+  auto_ids: true
+
+permalink: /:year/:month/:title/
 
 plugins:
-  - jekyll-paginate
   - jekyll-feed
-paginate: 10
-paginate_path: /page-:num
+  - jekyll-sitemap
 
-#disqus-id: your-disqus-id
+feed:
+  path: /feed.xml
 
-source: .
-destination: ./_site
+defaults:
+  - scope: { path: "", type: "posts" }
+    values: { layout: "post" }
+  - scope: { path: "" }
+    values: { layout: "page" }
 
-sass:
-    style: :compressed
-    sass_dir: assets/css/
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - README.md
+  - .jekyll-cache
+  - build
