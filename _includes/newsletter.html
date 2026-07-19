@@ -1,0 +1,39 @@
+{%- comment -%}
+  Newsletter capture -> Google Forms.
+  Renders only once real IDs are set in _config.yml (newsletter: block).
+  Drop {% include newsletter.html %} anywhere — bottom of a layout, or
+  mid-post by writing the tag straight into the Markdown. Safe to use twice
+  on one page (one shared submit handler binds every instance).
+{%- endcomment -%}
+{%- assign nl = site.newsletter -%}
+{%- if nl.enabled and nl.form_id and nl.form_id != "YOUR_FORM_ID" and nl.entry_id and nl.entry_id != "entry.YOUR_ENTRY_ID" -%}
+<section class="newsletter" aria-label="Subscribe to the newsletter">
+  <p class="nl-title">{{ nl.title | default: "The dispatch" }}</p>
+  <p class="nl-blurb">{{ nl.blurb | default: "New entries, now and then — no spam, no noise." }}</p>
+  <form class="nl-form" data-nl action="https://docs.google.com/forms/d/e/{{ nl.form_id }}/formResponse" method="post" target="_blank" rel="noopener">
+    <div class="nl-field">
+      <input type="email" name="{{ nl.entry_id }}" required autocomplete="email" aria-label="Email address" placeholder="you@example.com">
+      <button type="submit">Subscribe</button>
+    </div>
+    <input type="text" class="nl-hp" name="_confirm" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <p class="nl-done" role="status" hidden>On the list — thank you.</p>
+  </form>
+</section>
+<script>
+(function(){
+  if(window.__nlInit)return; window.__nlInit=1;
+  function bind(){
+    document.querySelectorAll('form[data-nl]').forEach(function(f){
+      f.addEventListener('submit',function(e){
+        e.preventDefault();
+        var hp=f.querySelector('.nl-hp'); if(hp&&hp.value)return; /* bot */
+        try{fetch(f.action,{method:'POST',mode:'no-cors',body:new URLSearchParams(new FormData(f))});}catch(err){}
+        var field=f.querySelector('.nl-field'), done=f.querySelector('.nl-done');
+        if(field)field.hidden=true; if(done)done.hidden=false;
+      });
+    });
+  }
+  if(document.readyState!=='loading')bind(); else document.addEventListener('DOMContentLoaded',bind);
+})();
+</script>
+{%- endif -%}

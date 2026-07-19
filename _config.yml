@@ -5,7 +5,7 @@ description:  "Essays and experiments on programming, engineering, robotics, def
 url:          "https://teocos.com"
 baseurl:      ""
 lang:         "en"
-timezone:     "America/Sao_Paulo"
+timezone:     "America/New_York"
 
 # ── identity / links ──────────────────────────────────────────
 author:
@@ -15,12 +15,30 @@ author:
 twitter:
   username: "phteocos"
 social:
-  github:   "teocos"        # ← update to your GitHub username if different
+  github:   "phtdacosta"    # ← update to your GitHub username if different
   twitter:  "phteocos"
 email:      ""              # optional — shown in the footer if set
 kofi:       "teocos"        # Ko-fi username (button colour #003500)
 google_analytics: "G-LR2601DRCQ"
 og_image:   "/assets/img/og-default.png"
+
+# ── newsletter (Google Forms backend) ─────────────────────────
+# Setup: make a Google Form with ONE "Email" short-answer question, marked Required.
+#   Three-dots menu → "Get pre-filled link" → type a dummy email → Get link → Copy.
+#   The link looks like:
+#     …/forms/d/e/1FAIpQLS…/viewform?…&entry.123456789=dummy@example.com
+#   • form_id  = the string between /d/e/ and /viewform   (begins 1FAIpQLS…)
+#   • entry_id = the "entry.NUMBER" part just before =dummy@example.com
+# Then, in the form's Responses tab, "Link to Sheets" so addresses collect there.
+# The box stays hidden until BOTH IDs below are filled in with real values.
+newsletter:
+  enabled:  true
+  form_id: 1FAIpQLSfgbBqe31seXZ6pvlOdwTeRUBDyRrOAlRqwIzJY5IPKe9aJXg
+  entry_id: entry.279120078
+  # form_id:  "YOUR_FORM_ID"
+  # entry_id: "entry.YOUR_ENTRY_ID"
+  title:    "The dispatch"
+  blurb:    "New entries, now and then — no spam, no noise."
 
 # Search-engine verification — paste tokens when you claim the site (optional)
 webmaster_verify:
