@@ -201,7 +201,7 @@ pre code{background:none;border:0;padding:0;color:var(--ink);font-size:inherit;}
 .nl-field button{background:transparent;border:1px solid var(--rule);border-radius:2px;padding:.6rem 1.1rem;font-family:var(--serif);font-size:1rem;color:var(--ink);cursor:pointer;white-space:nowrap;}
 .nl-field button:hover{border-color:var(--rubric);color:var(--rubric);}
 .nl-hp{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0;}
-.nl-done{font-family:var(--serif);font-style:italic;font-size:1.02rem;color:var(--rubric);margin-top:1.1rem;}
+.nl-done{font-family:var(--serif);font-style:italic;font-size:1.08rem;color:var(--rubric);margin:0;}
 @media (max-width:26rem){.nl-field{flex-direction:column;}}
 
 
@@ -222,7 +222,7 @@ pre code{background:none;border:0;padding:0;color:var(--ink);font-size:inherit;}
 .tag-list a{color:var(--ink);} .tag-list a:hover{color:var(--rubric);}
 
 /* ---- footer (centered, minimal) ---- */
-.site-footer{flex-shrink:0;border-top:1px solid var(--rule);margin-top:clamp(3rem,8vw,5rem);padding-block:2rem 3rem;text-align:right;}
+.site-footer{flex-shrink:0;border-top:1px solid var(--rule);margin-top:clamp(3rem,8vw,5rem);padding-block:2rem 3rem;text-align:left;}
 .footer-motto{font-family:var(--serif);font-style:italic;color:var(--ink-soft);font-size:1rem;}
 .footer-meta{margin-top:.7rem;font-family:var(--serif);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);}
 .footer-meta a{color:var(--ink-soft);}
