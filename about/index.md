@@ -15,4 +15,4 @@ My bias is **e/acc**. I build in the open and I believe the way through is forwa
 
 The name over the door is *gradatim per vitam* — step by step, through life. Progress compounds; so does patience. I'd rather build one true thing at a time than a hundred that don't hold.
 
-You'll find me on [X](https://x.com/phteocos) and [GitHub](https://github.com/teocos). If something here earned its place in your day, you can [buy me a coffee](https://ko-fi.com/teocos), writing requires caffeine.
+You'll find me on [X](https://x.com/phteocos) and [GitHub](https://github.com/teocos). If something here earned its place in your day, you can [buy me a coffee](https://ko-fi.com/teocos), writing takes a ton of caffeine.
