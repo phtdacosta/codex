@@ -2,7 +2,7 @@
 layout: page
 title: About
 hide_title: true
-subtitle: "The keeper of this codex"
+subtitle: "The keeper of these pages"
 permalink: /about/
 description: "teo — engineer, builder, e/acc. Notes on programming, engineering, robotics, defense, philosophy, and entrepreneurship."
 ---
