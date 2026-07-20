@@ -6,8 +6,13 @@ layout: default
   <ul class="index-list">
     {%- for post in site.posts %}
     <li>
-      <span class="index-date">{{ post.date | date: "%Y.%m.%d" }}</span>
-      <span class="index-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></span>
+      <a class="index-entry" href="{{ post.url | relative_url }}">
+        {%- if post.image %}
+        <span class="index-plate"><img src="{% if post.image contains '://' %}{{ post.image }}{% else %}{{ post.image | relative_url }}{% endif %}" alt="" loading="lazy" decoding="async" width="1600" height="190"></span>
+        {%- endif %}
+        <span class="index-date">{{ post.date | date: "%Y.%m.%d" }}</span>
+        <span class="index-title">{{ post.title }}</span>
+      </a>
     </li>
     {%- endfor %}
   </ul>
