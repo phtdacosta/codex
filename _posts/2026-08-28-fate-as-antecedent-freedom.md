@@ -2,7 +2,6 @@
 layout: post
 title: "Fate as Antecedent Freedom"
 date: 2026-08-28
-ref: "2078525057199174078"
 tags: [philosophy, metaphysics, free-will, theology]
 description: "A compact theory of antecedent agency, one compossible world, irreversible history, and the celestial clock."
 # Cover image. Recommended: keep the file local at the path below
@@ -55,7 +54,11 @@ Antecedent agency exists to pay that price. It is needed if the creature is to c
 
 Relocation alone, however, does not solve sourcehood. If the antecedent choice merely expresses an already fixed prior character, the original problem has been moved backward rather than answered. If it is not sufficiently fixed by a prior character, the opposite objection appears: what distinguishes genuine origination from arbitrariness or luck? The theory therefore inherits the libertarian first-act problem. It must eventually explain how an act can be intelligible through reasons and genuinely attributable to an agent without simply being the inevitable output of some still earlier dispositional state. Until that account is supplied, *antecedent sourcehood* names the place where the theory wants origination to occur; it does not yet explain how origination works. (See: [Origination regress / first-act problem](https://teocos.com/2026/08/fate-as-antecedent-freedom-references/#origination-regress-first-act-problem); [Research §1.5](https://teocos.com/2026/08/fate-as-antecedent-freedom-research-program/#s1-5))
 
-Composition and performance is the useful comparison. A score can originate in agency and then be fixed, and being fixed during performance does not mean it was never authored. That establishes one logical point: authorship and fixed execution stop contradicting one another once they are assigned to different explanatory stages.
+Insofar as a temporal decision expresses the agent's own antecedent contribution, it is the concrete unfolding of that contribution rather than a second origin of authorship. Call that unfolding *decompression*. The chooser did not hold the later scene in view, and the scene is one concrete form the integrated parameters take within a life. Deliberation, refusal, effort, and error remain genuine acts and genuine causes in that process.
+
+The word carries one risk worth blocking here. Decompression is not lossless: the concrete scene is not stored inside the parameter and then unpacked. Providential integration, other agents, natural law, and inherited history supply information the antecedent contribution never contained. A decision made in response to what someone else did is a real decision, and it is not the unfolding of my parameter.
+
+Composition and performance is the useful comparison. A score can originate in agency and then be fixed, yet it exists as actual music only through performance; performance realizes the composition without becoming a second authorship of it. That establishes one logical point: authorship and fixed execution stop contradicting one another once they are assigned to different explanatory stages.
 
 That is why the model is better called antecedent sourcehood plus temporal determinacy than ordinary compatibilism. It keeps the intuition that the responsible subject genuinely contributes to what gets actualized, and it lets the physical run be settled at the global level once initialized.
 

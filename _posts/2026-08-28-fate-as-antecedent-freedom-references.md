@@ -84,7 +84,7 @@ Last reviewed for this version: **29 August 2026**.
 **Status:** Proposed Synthesis.  
 **Article load-bearing?** Yes.  
 **Definition:** Ultimate personal sourcehood placed prior to ordinary embodied temporal execution, where *prior* may be premortal relative to physical history or ontological depending on the chosen horn of the antecedence trilemma.  
-**Role in model:** It relocates libertarian-like sourcehood away from every temporal decision point and into the conditions under which the world-history is instantiated. Temporal deliberation remains causally real inside the run.  
+**Role in model:** It relocates libertarian-like sourcehood away from every temporal decision point and into the conditions under which the world-history is instantiated. Temporal deliberation remains causally real inside the run. Temporal decisions are therefore genuine acts and genuine causes within execution, while their deepest sourcehood is antecedent rather than newly originated at each temporal decision point. *Decompression* names this relation at the level of analogy: antecedent parameters become concrete through the integrated temporal run without turning each later decision into a second source of ultimate authorship.  
 **Boundary:** This is not ordinary compatibilism, standard Christian doctrine, Plato's exact theory, or a result of physics. It is also not the claim that an agent chose every event.  
 **Sources:** Andrew Hronich, "Premortalism and the Problem of Involuntary Suffering," *The Heythrop Journal* 65 (2024), 629-644, [DOI](https://doi.org/10.1111/heyj.14370); [SEP, "Free Will"](https://plato.stanford.edu/entries/freewill/).  
 **Cross-links:** Authorial parameterization; Antecedence trilemma; Global historical determinacy; Personal identity; Origination regress / first-act problem.
@@ -126,7 +126,8 @@ Last reviewed for this version: **29 August 2026**.
 **Definition:** The antecedent selection or acceptance of a high-level existential parameter together with a sufficiently understood range of admissible realizations, while leaving the concrete historical realization unspecified.  
 **Role in model:** It replaces the morally and philosophically unstable phrase *premortal consent*.  
 **Core condition:** known parameter → known admissible range → unknown concrete realization.  
-**Boundary:** Parameterization is not blanket consent, scene-selection, moral absolution of other agents, or retrospective permission for any event that happens to occur.  
+**Interpretive note:** *Unknown concrete realization* means unknown to the antecedent chooser at the level of parameter selection; the phrase does not by itself assert that several futures remain ontically open during execution.  
+**Boundary:** Parameterization is not blanket consent, scene-selection, moral absolution of other agents, or retrospective permission for any event that happens to occur. Decompression therefore cannot be read as the person's hidden selection of every later scene: providential integration, other agents, natural law, and inherited history remain part of the realized world.  
 **Main objection:** The authorship threshold remains under-specified.  
 **Sources:** Hronich, "Premortalism and the Problem of Involuntary Suffering," [full text](https://onlinelibrary.wiley.com/doi/full/10.1111/heyj.14370).  
 **Cross-links:** Admissible range; Limited archetypal selection; Problem of evil; Providential integration.  
@@ -704,8 +705,8 @@ Last reviewed for this version: **29 August 2026**.
 **Status:** Modern Structural Analogy.  
 **Article load-bearing?** No.  
 **Definition:** The comparison between a compact seed or parameter vector and a large concrete world generated through fixed rules.  
-**Role in model:** It illustrates how limited high-level information can generate extensive concrete variation without containing a miniature specification of every event.  
-**Boundary:** The analogy does not imply that reality is literally a computer simulation, that God is a software engineer, or that parameter-generation mechanisms in software establish metaphysical possibility.  
+**Role in model:** It illustrates the project's decompression relation: limited high-level information can become extensively concrete through integration and execution without containing a miniature scene-by-scene specification of the later life.  
+**Boundary:** The analogy does not imply that reality is literally a computer simulation, that God is a software engineer, or that parameter-generation mechanisms in software establish metaphysical possibility. *Decompression* is structural language, not a claim that reality is software.  
 **Cross-links:** Limited archetypal selection; Authorial parameterization; Providential integration.
 
 ## Source-use Rules

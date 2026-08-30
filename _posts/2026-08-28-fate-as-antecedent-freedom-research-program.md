@@ -93,6 +93,8 @@ The program is modular, but its current priority order is binding: [identity](ht
 
 **Working distinction.** **Free execution** is not yet the same claim as **creaturely authorship of the executable**.
 
+**Clarification.** Free execution is not passive playback. Temporal deliberation, refusal, effort, and error remain genuine acts and genuine causes within the realized history. The distinction concerns where ultimate sourcehood is located, not whether temporal agency is causally real.
+
 **Research tasks.**
 
 1. Compare reasons-responsiveness and other compatibilist ownership conditions with stronger sourcehood requirements.
@@ -106,7 +108,7 @@ The program is modular, but its current priority order is binding: [identity](ht
 
 ### §1.5 Origination regress / first-act problem {#s1-5}
 
-**Question.** If antecedent agency is supposed to provide sourcehood, what makes its first act genuinely originate with the agent rather than merely express a prior character—and what prevents an underdetermined act from collapsing into luck or arbitrariness?
+**Question.** If antecedent agency is supposed to provide sourcehood, what makes its first act genuinely originate with the agent rather than merely express a prior character, and what prevents an underdetermined act from collapsing into luck or arbitrariness?
 
 **Dilemma.**
 
@@ -157,6 +159,8 @@ The program is modular, but its current priority order is binding: [identity](ht
 
 **Required properties.** generativity, non-redundancy, cross-context recurrence, abstraction, compression, and independent codability.
 
+**Compression problem.** Can a compact antecedent parameter basis constrain a concrete biography strongly enough to count as authorship without becoming a hidden scene-script? The project's decompression language is useful only if the information carried by parameterization, providential integration, and temporal execution can be kept distinct.
+
 **Research tasks.**
 
 1. Build a corpus of biographical episodes across cultures, historical periods, and social roles.
@@ -165,6 +169,7 @@ The program is modular, but its current priority order is binding: [identity](ht
 4. Test cross-cultural invariance and translation stability.
 5. Penalize bases that achieve coverage only through semantic vagueness.
 6. Test whether a basis learned on one corpus can classify a held-out corpus.
+7. Specify what information belongs to the antecedent parameter, what is supplied by providential integration, and what becomes concrete only in temporal execution; reject any account in which *decompression* merely renames scene-selection.
 
 **Success condition.** A relatively compact basis captures recurrent structure with high independent-coder agreement and meaningful out-of-sample stability.
 
