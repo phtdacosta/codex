@@ -1,0 +1,19 @@
+{%- comment -%}
+  A plate image. If a .webp copy sits next to the file (moirai.png + moirai.webp), browsers that
+  read WebP get it instead; the original stays for everything else and for social previews.
+  Params: src, alt, width, height, priority (the page's main image: load it first),
+  lazy (below the fold: load it when it comes near).
+{%- endcomment -%}
+{%- assign pi_src = include.src -%}
+{%- assign pi_webp = nil -%}
+{%- unless pi_src contains "://" -%}
+  {%- assign pi_try = pi_src | split: "." | pop | join: "." | append: ".webp" -%}
+  {%- if pi_try != pi_src -%}
+    {%- assign pi_found = site.static_files | where: "path", pi_try | first -%}
+    {%- if pi_found -%}{%- assign pi_webp = pi_try -%}{%- endif -%}
+  {%- endif -%}
+{%- endunless -%}
+{%- if pi_src contains "://" -%}{%- assign pi_url = pi_src -%}{%- else -%}{%- assign pi_url = pi_src | relative_url -%}{%- endif -%}
+{%- if pi_webp -%}<picture><source srcset="{{ pi_webp | relative_url }}" type="image/webp">{%- endif -%}
+<img src="{{ pi_url }}" alt="{{ include.alt }}" width="{{ include.width }}" height="{{ include.height }}" decoding="async"{% if include.priority %} fetchpriority="high"{% elsif include.lazy %} loading="lazy"{% endif %}>
+{%- if pi_webp -%}</picture>{%- endif -%}

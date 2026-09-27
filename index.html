@@ -9,13 +9,12 @@ layout: default
 <ol class="decrees">
   {%- for post in site.posts %}
   {%- assign post_annexes = site.annexes | where: "parent", post.slug %}
-  {%- if post.image contains "://" %}{% assign plate_src = post.image %}{% else %}{% assign plate_src = post.image | relative_url %}{% endif %}
   <li class="decree">
     <a class="decree-link" href="{{ post.url | relative_url }}">
-      <span class="d-head"><span class="d-no"><span class="sr-only">Decree </span>Nº&nbsp;{% include decree-no.html n=forloop.rindex %}</span><span class="d-date">Filed {{ post.date | date: "%Y·%m·%d" }}{% if post_annexes.size > 0 %}<span class="d-annex">+ {{ post_annexes.size }} {% if post_annexes.size == 1 %}annex{% else %}annexes{% endif %}</span>{% endif %}</span></span>
+      <span class="d-head"><span class="d-no"><span class="sr-only">Decree </span>Nº&nbsp;{% include decree-no.html n=forloop.rindex %}</span><span class="d-date">Filed <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y·%m·%d" }}</time>{% if post_annexes.size > 0 %}<span class="d-annex">+ {{ post_annexes.size }} {% if post_annexes.size == 1 %}annex{% else %}annexes{% endif %}</span>{% endif %}</span></span>
       <h2 class="d-title">{{ post.title }}</h2>
       {%- if post.image %}
-      <span class="plate"><img src="{{ plate_src }}" alt="" width="1600" height="300" decoding="async"{% if forloop.first %} fetchpriority="high"{% else %} loading="lazy"{% endif %}></span>
+      <span class="plate">{% if forloop.first %}{% include plate-img.html src=post.image alt="" width=1600 height=300 priority=true %}{% else %}{% include plate-img.html src=post.image alt="" width=1600 height=300 lazy=true %}{% endif %}</span>
       {%- else %}
       <span class="plate plate--blank" aria-hidden="true"><b>{{ post.title | slice: 0 }}</b></span>
       {%- endif %}

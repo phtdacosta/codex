@@ -1,0 +1,33 @@
+{%- comment -%}
+  Rendered HTML → readable plain text for llms-full.txt: headings become #/##/###, list items "- ",
+  quotes "> ", web links keep their address in brackets, paragraphs stay apart.  Pass html=.
+{%- endcomment -%}
+{%- capture pt_nl %}
+{% endcapture -%}
+{%- assign pt_parts = include.html | split: '<a href="' -%}
+{%- capture pt_html -%}
+{{- pt_parts[0] -}}
+{%- for pt_part in pt_parts offset: 1 -%}
+  {%- assign pt_url = pt_part | split: '"' | first -%}
+  {%- assign pt_rest = pt_part | remove_first: pt_url | remove_first: '"' -%}
+  {%- assign pt_head = pt_rest | slice: 0 -%}
+  {%- if pt_url contains "://" and pt_head == ">" -%}
+    {%- assign pt_tail = " (" | append: pt_url | append: ")" -%}
+    {{- pt_rest | remove_first: ">" | replace_first: "</a>", pt_tail -}}
+  {%- else -%}
+    {{- '<a href="' | append: pt_part -}}
+  {%- endif -%}
+{%- endfor -%}
+{%- endcapture -%}
+{%- assign pt_bq = '<blockquote>' | append: pt_nl | append: '  <p>' -%}
+{%- assign pt_text = pt_html
+  | replace: pt_bq, '@@BQ@@<p>'
+  | replace: '<h2', '@@H2@@<h2' | replace: '<h3', '@@H3@@<h3' | replace: '<h4', '@@H4@@<h4'
+  | replace: '<li>', '@@LI@@<li>'
+  | strip_html
+  | replace: '@@H2@@', '## ' | replace: '@@H3@@', '### ' | replace: '@@H4@@', '#### '
+  | replace: '@@LI@@', '- ' | replace: '@@BQ@@', '> '
+  | replace: '&amp;', '&' | replace: '&lt;', '<' | replace: '&gt;', '>' | replace: '&quot;', '"' | replace: '&#39;', "'" | replace: '&nbsp;', ' ' -%}
+{%- assign pt_3 = pt_nl | append: pt_nl | append: pt_nl -%}{%- assign pt_2 = pt_nl | append: pt_nl -%}
+{%- assign pt_text = pt_text | replace: pt_3, pt_2 | replace: pt_3, pt_2 | replace: pt_3, pt_2 -%}
+{{- pt_text | strip -}}

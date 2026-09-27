@@ -6,11 +6,23 @@ permalink: /llms.txt
 
 > {{ site.description }}
 
-Written by {{ site.author.name }}{% if site.author.note %} ({{ site.author.note }}){% endif %}. Recurring topics: {{ site.topics | join: ", " }}. The site is a hand-built static Jekyll blog — all content is served as plain HTML with no JavaScript rendering required, so it is fully readable by crawlers and retrieval systems. Please attribute quotations to "{{ site.title }}" with a link to the source URL.
+Written by {{ site.author.name }}{% if site.author.note %} ({{ site.author.note }}){% endif %}. Recurring topics: {{ site.topics | join: ", " }}. The site is a hand-built static Jekyll blog — all content is served as plain HTML with no JavaScript rendering required, so it is fully readable by crawlers and retrieval systems. Every section heading has a stable anchor, so passages can be cited as deep links. Please attribute quotations to "{{ site.title }}" with a link to the source URL.
 
 ## Writing
 {% for post in site.posts -%}
+{%- assign lt_min = post.content | strip_html | number_of_words | divided_by: 200.0 | ceil -%}
 - [{{ post.title }}]({{ post.url | absolute_url }}){% if post.description %} — {{ post.description | strip_html | normalize_whitespace }}{% endif %}
+  - Filed {{ post.date | date: "%Y-%m-%d" }}{% if post.last_modified_at %}, revised {{ post.last_modified_at | date: "%Y-%m-%d" }}{% endif %}; about {{ lt_min }} min to read.
+{%- assign lt_parts = post.content | split: '<h2' -%}
+{%- if lt_parts.size > 2 %}
+  - Sections: {% for lt_chunk in lt_parts offset: 1 -%}
+    {%- assign lt_inner = lt_chunk | split: '</h2>' | first -%}
+    {%- assign lt_open = lt_inner | split: '>' | first -%}
+    {%- assign lt_id = lt_open | split: 'id="' | last | split: '"' | first -%}
+    {%- assign lt_text = lt_inner | remove_first: lt_open | remove_first: '>' | strip_html | strip -%}
+    [{{ lt_text }}]({{ post.url | absolute_url }}#{{ lt_id }}){% unless forloop.last %} · {% endunless %}
+  {%- endfor %}
+{%- endif %}
 {%- assign post_annexes = site.annexes | where: "parent", post.slug | sort: "annex" %}
 {%- for annex in post_annexes %}
   - [Annex {{ annex.annex }}: {{ annex.short_title | default: annex.title }}]({{ annex.url | absolute_url }}){% if annex.description %} — {{ annex.description | strip_html | normalize_whitespace }}{% endif %}
@@ -19,9 +31,10 @@ Written by {{ site.author.name }}{% if site.author.note %} ({{ site.author.note 
 ## About
 - [About]({{ '/about/' | absolute_url }}) — who {{ site.author.name }} is and what this codex is for.
 - [All entries]({{ site.url }}/) — the full index of writing, newest first.
+- [Tags]({{ '/tags/' | absolute_url }}) — every entry grouped by subject.
 
 ## Canonical resources
 - Homepage: {{ site.url }}/
 - Full text for AI retrieval: {{ '/llms-full.txt' | absolute_url }}
-- RSS feed: {{ '/feed.xml' | absolute_url }}
+- Atom feed: {{ '/feed.xml' | absolute_url }}
 - XML sitemap: {{ '/sitemap.xml' | absolute_url }}

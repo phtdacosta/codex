@@ -40,6 +40,7 @@
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 {%- endif %}
 <meta name="author" content="{{ site.author.name }}">
+<link rel="author" href="{{ '/about/' | absolute_url }}">
 <meta name="generator" content="Jekyll">
 {%- if site.webmaster_verify.google and site.webmaster_verify.google != "" %}
 <meta name="google-site-verification" content="{{ site.webmaster_verify.google }}">{% endif %}
@@ -88,6 +89,24 @@
 <meta name="twitter:image:alt" content="{{ page.image_alt | default: site.title | escape }}">
 {%- if site.twitter.username %}<meta name="twitter:site" content="@{{ site.twitter.username }}">
 <meta name="twitter:creator" content="@{{ site.twitter.username }}">{% endif %}
+{%- if is_article %}
+<meta name="twitter:label1" content="Reading time">
+<meta name="twitter:data1" content="{{ rmin }} min">
+<meta name="twitter:label2" content="Filed">
+<meta name="twitter:data2" content="{{ page.date | date: '%Y-%m-%d' }}">
+
+{%- comment -%} ---- citation metadata (Zotero and other reference managers, scholarly indexes) ---- {%- endcomment -%}
+<meta name="citation_title" content="{{ page.title | escape }}">
+<meta name="citation_author" content="{{ site.author.name }}">
+<meta name="citation_publication_date" content="{{ page.date | date: '%Y/%m/%d' }}">
+{%- if page.last_modified_at %}
+<meta name="citation_online_date" content="{{ page.last_modified_at | date: '%Y/%m/%d' }}">
+{%- endif %}
+<meta name="citation_language" content="{{ site.lang }}">
+{%- if is_annex and parent_doc %}
+<meta name="citation_inbook_title" content="{{ parent_doc.title | escape }}">
+{%- endif %}
+{%- endif %}
 
 {%- comment -%} ---- JSON-LD (values via | jsonify for safe escaping). A post with annexes lists them as
      hasPart; an annex is part of its post, and its breadcrumb runs Home → post → annex. ---- {%- endcomment -%}
@@ -112,8 +131,38 @@
       "sameAs": [
         {{ "https://x.com/" | append: site.twitter.username | jsonify }},
         {{ "https://github.com/" | append: site.social.github | jsonify }}
+      ],
+      "knowsAbout": {{ site.topics | jsonify }}
+    }
+    {%- if page.url == "/" -%},
+    {
+      "@type": "Blog",
+      "@id": {{ site.url | append: "/#blog" | jsonify }},
+      "url": {{ site.url | append: "/" | jsonify }},
+      "name": {{ site.title | jsonify }},
+      "description": {{ site.description | jsonify }},
+      "inLanguage": {{ site.lang | jsonify }},
+      "author": { "@id": {{ site.url | append: "/#person" | jsonify }} },
+      "publisher": { "@id": {{ site.url | append: "/#person" | jsonify }} },
+      "isPartOf": { "@id": {{ site.url | append: "/#website" | jsonify }} },
+      "blogPost": [
+        {%- for post in site.posts %}
+        { "@type": "BlogPosting", "@id": {{ post.url | absolute_url | append: "#article" | jsonify }}, "headline": {{ post.title | jsonify }}, "url": {{ post.url | absolute_url | jsonify }}, "datePublished": {{ post.date | date_to_xmlschema | jsonify }}, "dateModified": {{ post.last_modified_at | default: post.date | date_to_xmlschema | jsonify }}{% if post.description %}, "description": {{ post.description | strip_html | normalize_whitespace | jsonify }}{% endif %} }{% unless forloop.last %},{% endunless %}
+        {%- endfor %}
       ]
     }
+    {%- endif -%}
+    {%- if page.url == "/about/" -%},
+    {
+      "@type": "ProfilePage",
+      "@id": {{ canonical | append: "#profile" | jsonify }},
+      "url": {{ canonical | jsonify }},
+      "name": {{ page_title | jsonify }},
+      "inLanguage": {{ site.lang | jsonify }},
+      "isPartOf": { "@id": {{ site.url | append: "/#website" | jsonify }} },
+      "mainEntity": { "@id": {{ site.url | append: "/#person" | jsonify }} }
+    }
+    {%- endif -%}
     {%- if is_article -%},
     {
       "@type": {% if is_annex %}"Article"{% else %}"BlogPosting"{% endif %},
@@ -124,8 +173,11 @@
       "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
       "dateModified": {{ page.last_modified_at | default: page.date | date_to_xmlschema | jsonify }},
       "inLanguage": {{ site.lang | jsonify }},
-      "image": {{ og_image | jsonify }},
+      "image": { "@type": "ImageObject", "url": {{ og_image | jsonify }}{% if page.image_caption %}, "caption": {{ page.image_caption | jsonify }}{% endif %} },
       "author": { "@id": {{ site.url | append: "/#person" | jsonify }} },
+      "isAccessibleForFree": true,
+      "copyrightHolder": { "@id": {{ site.url | append: "/#person" | jsonify }} },
+      "copyrightYear": {{ page.date | date: "%Y" | plus: 0 }},
       "publisher": { "@id": {{ site.url | append: "/#person" | jsonify }} },
       "mainEntityOfPage": { "@type": "WebPage", "@id": {{ canonical | jsonify }} },
       {%- if is_annex and parent_doc %}
@@ -170,13 +222,14 @@
 <link rel="apple-touch-icon" href="{{ '/assets/favicon.ico' | relative_url }}">
 
 {%- comment -%} ---- feeds ---- {%- endcomment -%}
-<link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | absolute_url }}">
+<link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ '/feed.xml' | absolute_url }}">
 <link rel="sitemap" type="application/xml" href="{{ '/sitemap.xml' | absolute_url }}">
 
-{%- comment -%} ---- fonts: Big Shoulders (display), IBM Plex Serif (reading), JetBrains Mono (strip, docket, code) ---- {%- endcomment -%}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders:opsz,wght@10..72,100..900&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400;1,600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+{%- comment -%} ---- fonts: self-hosted (declared in style.css); preload the ones that paint first ---- {%- endcomment -%}
+<link rel="preload" href="{{ '/assets/fonts/big-shoulders-latin.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
+{%- if is_article or page.layout == "page" %}
+<link rel="preload" href="{{ '/assets/fonts/IBMPlexSerif-Regular-Latin1.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
+{%- endif %}
 
 {%- if site.github.build_revision -%}{%- assign cssver = site.github.build_revision -%}{%- else -%}{%- assign cssver = site.time | date: '%s' -%}{%- endif -%}
 <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}?v={{ cssver }}">

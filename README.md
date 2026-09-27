@@ -37,7 +37,8 @@ title: "Your Title Here"
 date: 2026-10-20
 tags: [engineering, robotics]         # the first tag shows in the docket line
 ref: "optional-reference-code"        # optional; shows as "Ref …"
-image: /assets/img/cover.jpg          # optional plate (local is best); printed in the two inks
+image: /assets/img/cover.jpg          # optional plate (local is best); printed in the two inks.
+                                      # put cover.webp next to it and that's what browsers get
 image_alt: "Describe the image"
 image_caption: "Plate 005 — a caption"
 description: "One line for search + social previews."
@@ -85,6 +86,39 @@ keep their `#anchor`.
 The two files left in `_posts/` for the old Fate companions are empty stubs marked
 `published: false`. They can be deleted.
 
+## Speed
+
+- **Fonts are self-hosted** in `assets/fonts/` (no Google Fonts requests), cut into
+  alphabets: a page downloads only the pieces its text uses (100–175 KB on most pages).
+  - Headings: *Big Shoulders*, trimmed to the heavy weights the design uses.
+  - Text: *IBM Plex Serif*, IBM's own files, untouched.
+  - Labels (the uppercase lines: strip, docket, dates, captions, footer) and code:
+    *Codex Mono*, which is **Monaspace Krypton** by GitHub Next, trimmed to the Latin
+    alphabets. It is renamed because Monaspace's licence reserves its name for unaltered
+    copies.
+  - The licences are next to the fonts (`OFL-*.txt`); all three are SIL Open Font License.
+- **Plates as WebP.** Any plate gets served as WebP when a `.webp` file with the same name
+  sits next to it (`moirai.png` → `moirai.webp`); nothing else changes, and social cards keep
+  the original file. `prometheus.webp` is already there (97 KB instead of the JPEG).
+  To make one: [squoosh.app](https://squoosh.app) → WebP, quality about 80, width 1280; or
+  `cwebp -q 80 -resize 1280 0 moirai.png -o moirai.webp`.
+- **Ko-fi's Support button** loads once the reader scrolls half a screen (or when the
+  browser is idle, on pages too short to scroll), so its script, frame and font never hold
+  up the first paint. **Google Analytics** loads after the page has finished loading; the
+  page view is still counted.
+
+## Search and AI answers
+
+- `head.html` writes the description, canonical address, Open Graph and X cards (with
+  reading time), citation tags for reference managers, and one JSON-LD graph: the site, you
+  (with your X and GitHub), the blog, each entry with its annexes, breadcrumbs, and the
+  About page as your profile.
+- `llms.txt` is a guide for AI search: every entry with its dates, reading time, a deep
+  link to each section, and its annexes. `llms-full.txt` is the full text with headings,
+  lists and links kept.
+- Dates are marked up (`<time>`), every section heading keeps a stable `#anchor`, and
+  `robots.txt` stays yours.
+
 ## What's where
 
 - `_config.yml` — identity, links, newsletter, the founding year in the strip (`founded`), the motto's gloss.
@@ -93,7 +127,10 @@ The two files left in `_posts/` for the old Fate companions are empty stubs mark
   `footer.html` — the motto line. `head.html` — SEO / Open Graph / JSON-LD.
   `toc.html` — the Contents box. `decree-no.html` — the Nº numbers.
   `annexes.html` — a post's annexes after its text. `newsletter.html` — the Google Forms box.
+  `plate-img.html` — a plate, with its WebP when there is one. `kofi.html`, `analytics.html`
+  — the two scripts, deferred. `plain-text.html` — the text conversion for `llms-full.txt`.
 - `_layouts/` — `default`, `post`, `annex`, `page`, `redirect` (old addresses), `none` (plain text files).
+- `assets/fonts/` — the three families and their licences.
 - `assets/favicon.ico` — the tab icon. `assets/img/og-default.png` — the default social-share card.
 
 `theme: null` in `_config.yml` keeps GitHub's default theme (Primer) out of the build;

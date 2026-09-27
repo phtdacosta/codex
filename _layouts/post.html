@@ -4,11 +4,12 @@ layout: default
 {%- assign annexes = "" | split: "" -%}
 {%- if page.collection == "posts" -%}{%- assign annexes = site.annexes | where: "parent", page.slug | sort: "annex" -%}{%- endif -%}
 {%- capture post_no -%}{% include decree-no.html url=page.url %}{%- endcapture -%}
-{%- if page.image contains "://" -%}{%- assign hero_src = page.image -%}{%- else -%}{%- assign hero_src = page.image | relative_url -%}{%- endif -%}
+{%- assign hero_alt = page.image_alt | default: page.title | escape -%}
+{%- assign hero_w = page.image_width | default: 1600 -%}{%- assign hero_h = page.image_height | default: 600 -%}
 <article class="pamphlet">
   <p class="docket">Codex
-    {%- if page.ref %} · Ref&nbsp;{{ page.ref }}{% endif %} · Filed&nbsp;{{ page.date | date: "%Y·%m·%d" }}
-    {%- if page.last_modified_at %} · Revised&nbsp;{{ page.last_modified_at | date: "%Y·%m·%d" }}{% endif %}
+    {%- if page.ref %} · Ref&nbsp;{{ page.ref }}{% endif %} · Filed&nbsp;<time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y·%m·%d" }}</time>
+    {%- if page.last_modified_at %} · Revised&nbsp;<time datetime="{{ page.last_modified_at | date_to_xmlschema }}">{{ page.last_modified_at | date: "%Y·%m·%d" }}</time>{% endif %}
     {%- if page.tags.first %} · {{ page.tags.first }}{% endif %} · {% include reading-time.html content=content %}</p>
   {%- if post_no != "000" %}
   <p class="post-no"><span class="sr-only">Decree </span>Nº&nbsp;{{ post_no }}</p>
@@ -18,7 +19,7 @@ layout: default
 
   {%- if page.image %}
   <figure class="post-hero">
-    <span class="plate"><img src="{{ hero_src }}" alt="{{ page.image_alt | default: page.title | escape }}" width="{{ page.image_width | default: 1600 }}" height="{{ page.image_height | default: 600 }}" decoding="async"{% if page.image_priority %} fetchpriority="high"{% endif %}></span>
+    <span class="plate">{% include plate-img.html src=page.image alt=hero_alt width=hero_w height=hero_h priority=page.image_priority %}</span>
     {%- if page.image_caption %}
     <figcaption>{{ page.image_caption }}</figcaption>
     {%- endif %}

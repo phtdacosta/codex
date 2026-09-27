@@ -13,11 +13,12 @@ layout: default
   {%- assign siblings = site.annexes | where: "parent", page.parent | sort: "annex" -%}
 {%- endif -%}
 {%- assign toc_style = page.toc_style | default: "plain" -%}
-{%- if page.image contains "://" -%}{%- assign hero_src = page.image -%}{%- else -%}{%- assign hero_src = page.image | relative_url -%}{%- endif -%}
+{%- assign hero_alt = page.image_alt | default: page.title | escape -%}
+{%- assign hero_w = page.image_width | default: 1600 -%}{%- assign hero_h = page.image_height | default: 600 -%}
 {%- if parent -%}{%- capture parent_no -%}{% include decree-no.html url=parent.url %}{%- endcapture -%}{%- endif -%}
 <article class="pamphlet annex">
-  <p class="docket">Codex · Filed&nbsp;{{ page.date | date: "%Y·%m·%d" }}
-    {%- if page.last_modified_at %} · Revised&nbsp;{{ page.last_modified_at | date: "%Y·%m·%d" }}{% endif %} · {% include reading-time.html content=content %}</p>
+  <p class="docket">Codex · Filed&nbsp;<time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y·%m·%d" }}</time>
+    {%- if page.last_modified_at %} · Revised&nbsp;<time datetime="{{ page.last_modified_at | date_to_xmlschema }}">{{ page.last_modified_at | date: "%Y·%m·%d" }}</time>{% endif %} · {% include reading-time.html content=content %}</p>
   <p class="post-no">{% if parent %}<span class="sr-only">Decree </span>Nº&nbsp;{{ parent_no }} · {% endif %}Annex&nbsp;{{ page.annex }}</p>
   <h1 class="post-title">{{ page.short_title | default: page.title }}</h1>
   {%- if parent %}
@@ -26,7 +27,7 @@ layout: default
 
   {%- if page.image %}
   <figure class="post-hero">
-    <span class="plate"><img src="{{ hero_src }}" alt="{{ page.image_alt | default: page.title | escape }}" width="{{ page.image_width | default: 1600 }}" height="{{ page.image_height | default: 600 }}" decoding="async"{% if page.image_priority %} fetchpriority="high"{% endif %}></span>
+    <span class="plate">{% include plate-img.html src=page.image alt=hero_alt width=hero_w height=hero_h priority=page.image_priority %}</span>
     {%- if page.image_caption %}
     <figcaption>{{ page.image_caption }}</figcaption>
     {%- endif %}
