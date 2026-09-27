@@ -1,6 +1,8 @@
 # ── teo's codex ───────────────────────────────────────────────
 title:        "teo's codex"
 tagline:      "gradatim per vitam"
+tagline_gloss: "step by step through life"   # the motto's translation, in the footer
+founded:      "MMXXVI"                        # the founding year, in the top strip
 description:  "Essays and experiments on programming, engineering, robotics, defense, philosophy, and entrepreneurship — kept as a codex by teo."
 url:          "https://teocos.com"
 baseurl:      ""
@@ -18,7 +20,7 @@ social:
   github:   "phtdacosta"    # ← update to your GitHub username if different
   twitter:  "phteocos"
 email:      ""              # optional — shown in the footer if set
-kofi:       "teocos"        # Ko-fi username (button colour #003500)
+kofi:       "teocos"        # Ko-fi username (the floating button uses the site's red, #a51d0e)
 google_analytics: "G-LR2601DRCQ"
 og_image:   "/assets/img/og-default.png"
 
@@ -55,6 +57,10 @@ topics:
   - entrepreneurship
 
 # ── build ─────────────────────────────────────────────────────
+# No theme: GitHub Pages otherwise loads its default one (Primer), whose own
+# assets/css/style.scss is built to the same address as this site's stylesheet.
+theme: null
+
 markdown: kramdown
 kramdown:
   input: GFM
@@ -63,16 +69,30 @@ kramdown:
 
 permalink: /:year/:month/:title/
 
+# Annexes: companion documents attached to a post, e.g. its references.
+# Each lives in _annexes/<the-post's-slug>/<name>.md and is published under
+# the post's address (/:year/:month/<the-post's-slug>/<name>/). See README.
+collections:
+  annexes:
+    output: true
+    permalink: /:year/:month/:path/
+
 plugins:
   - jekyll-feed
   - jekyll-sitemap
+  - jekyll-redirect-from
 
 feed:
   path: /feed.xml
 
+redirect_from:
+  json: false     # redirects work without publishing a /redirects.json index
+
 defaults:
   - scope: { path: "", type: "posts" }
     values: { layout: "post" }
+  - scope: { path: "", type: "annexes" }
+    values: { layout: "annex" }
   - scope: { path: "" }
     values: { layout: "page" }
 

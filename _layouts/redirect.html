@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'en' }}">
+<head>
+<meta charset="utf-8">
+<title>Moved · {{ site.title }}</title>
+<link rel="canonical" href="{{ page.redirect.to }}">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{%- comment -%}
+  Old addresses (jekyll-redirect-from). The script keeps any #anchor, so a link to one specific
+  entry still lands on it; the refresh is the no-JavaScript fallback.
+{%- endcomment %}
+<script>location.replace({{ page.redirect.to | jsonify }} + location.search + location.hash);</script>
+<noscript><meta http-equiv="refresh" content="0; url={{ page.redirect.to }}"></noscript>
+<style>html{background:#e7e0cf;color:#141210;font:1rem/1.6 Georgia,serif}@media (prefers-color-scheme:dark){html{background:#0f0e0d;color:#e9e2d1}}body{max-width:40rem;margin:4rem auto;padding:0 1rem}a{color:inherit}</style>
+</head>
+<body>
+<p>This record has moved to <a href="{{ page.redirect.to }}">{{ page.redirect.to }}</a>.</p>
+</body>
+</html>

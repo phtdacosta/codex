@@ -1,0 +1,13 @@
+{%- comment -%}
+  A post's annexes, listed again at the end of the article. Pass include.annexes.
+{%- endcomment -%}
+{%- if include.annexes and include.annexes.size > 0 -%}
+<nav class="contents contents--end" aria-label="Annexes">
+  <span class="meta">Annexes</span>
+  <ol class="c-annexes">
+    {%- for ax in include.annexes %}
+    <li><a href="{{ ax.url | relative_url }}" data-annex="{{ ax.annex }}">{{ ax.short_title | default: ax.title }}</a></li>
+    {%- endfor %}
+  </ol>
+</nav>
+{%- endif -%}

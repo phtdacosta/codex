@@ -11,6 +11,10 @@ Written by {{ site.author.name }}{% if site.author.note %} ({{ site.author.note 
 ## Writing
 {% for post in site.posts -%}
 - [{{ post.title }}]({{ post.url | absolute_url }}){% if post.description %} — {{ post.description | strip_html | normalize_whitespace }}{% endif %}
+{%- assign post_annexes = site.annexes | where: "parent", post.slug | sort: "annex" %}
+{%- for annex in post_annexes %}
+  - [Annex {{ annex.annex }}: {{ annex.short_title | default: annex.title }}]({{ annex.url | absolute_url }}){% if annex.description %} — {{ annex.description | strip_html | normalize_whitespace }}{% endif %}
+{%- endfor %}
 {% endfor %}
 ## About
 - [About]({{ '/about/' | absolute_url }}) — who {{ site.author.name }} is and what this codex is for.

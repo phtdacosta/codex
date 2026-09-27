@@ -1,4 +1,10 @@
 {%- comment -%} ---- derived values ---- {%- endcomment -%}
+{%- assign is_post = false -%}{%- if page.layout == "post" -%}{%- assign is_post = true -%}{%- endif -%}
+{%- assign is_annex = false -%}{%- if page.layout == "annex" -%}{%- assign is_annex = true -%}{%- endif -%}
+{%- assign is_article = false -%}{%- if is_post or is_annex -%}{%- assign is_article = true -%}{%- endif -%}
+{%- assign parent_doc = nil -%}{%- assign child_docs = "" | split: "" -%}
+{%- if is_annex and page.parent -%}{%- assign parent_doc = site.posts | where: "slug", page.parent | first -%}{%- endif -%}
+{%- if is_post and page.collection == "posts" -%}{%- assign child_docs = site.annexes | where: "parent", page.slug | sort: "annex" -%}{%- endif -%}
 {%- if page.title -%}
   {%- assign page_title = page.title | append: " · " | append: site.title -%}
 {%- else -%}
@@ -17,7 +23,7 @@
 {%- else -%}{%- assign og_mime = "image/png" -%}{%- endif -%}
 {%- if page.image -%}{%- assign og_w = page.image_width -%}{%- assign og_h = page.image_height -%}
 {%- else -%}{%- assign og_w = 1200 -%}{%- assign og_h = 630 -%}{%- endif -%}
-{%- if page.layout == "post" -%}{%- assign og_type = "article" -%}{%- else -%}{%- assign og_type = "website" -%}{%- endif -%}
+{%- if is_article -%}{%- assign og_type = "article" -%}{%- else -%}{%- assign og_type = "website" -%}{%- endif -%}
 {%- assign lang_og = site.lang | replace: "-", "_" -%}
 {%- assign wcount = page.content | strip_html | number_of_words -%}
 {%- assign rmin = wcount | divided_by: 200.0 | ceil -%}{%- if rmin < 1 -%}{%- assign rmin = 1 -%}{%- endif -%}
@@ -47,10 +53,10 @@
 {%- endif %}
 
 {%- comment -%} ---- theme colour (both schemes) + flash-free bootstrap ---- {%- endcomment -%}
-<meta name="theme-color" media="(prefers-color-scheme: light)" content="#eae8e1">
-<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0a0b">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#e7e0cf">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0f0e0d">
 <script>(function(){try{var t=localStorage.getItem('codex-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
-<style>html{background:#eae8e1;color-scheme:light}html[data-theme="dark"]{background:#0a0a0b;color-scheme:dark}@media (prefers-color-scheme:dark){html:not([data-theme="light"]){background:#0a0a0b;color-scheme:dark}}</style>
+<style>html{background:#e7e0cf;color-scheme:light}html[data-theme="dark"]{background:#0f0e0d;color-scheme:dark}@media (prefers-color-scheme:dark){html:not([data-theme="light"]){background:#0f0e0d;color-scheme:dark}}</style>
 
 {%- comment -%} ---- Open Graph ---- {%- endcomment -%}
 <meta property="og:type" content="{{ og_type }}">
@@ -66,7 +72,7 @@
 <meta property="og:image:height" content="{{ og_h }}">
 {%- endif %}
 <meta property="og:image:type" content="{{ og_mime }}">
-{%- if page.layout == "post" %}
+{%- if is_article %}
 <meta property="og:updated_time" content="{{ page.last_modified_at | default: page.date | date_to_xmlschema }}">
 <meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}">
 {%- if page.last_modified_at %}<meta property="article:modified_time" content="{{ page.last_modified_at | date_to_xmlschema }}">{% endif %}
@@ -83,7 +89,8 @@
 {%- if site.twitter.username %}<meta name="twitter:site" content="@{{ site.twitter.username }}">
 <meta name="twitter:creator" content="@{{ site.twitter.username }}">{% endif %}
 
-{%- comment -%} ---- JSON-LD (values via | jsonify for safe escaping) ---- {%- endcomment -%}
+{%- comment -%} ---- JSON-LD (values via | jsonify for safe escaping). A post with annexes lists them as
+     hasPart; an annex is part of its post, and its breadcrumb runs Home → post → annex. ---- {%- endcomment -%}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -107,9 +114,9 @@
         {{ "https://github.com/" | append: site.social.github | jsonify }}
       ]
     }
-    {%- if page.layout == "post" -%},
+    {%- if is_article -%},
     {
-      "@type": "BlogPosting",
+      "@type": {% if is_annex %}"Article"{% else %}"BlogPosting"{% endif %},
       "@id": {{ canonical | append: "#article" | jsonify }},
       "headline": {{ page.title | jsonify }},
       "description": {{ desc | jsonify }},
@@ -121,7 +128,21 @@
       "author": { "@id": {{ site.url | append: "/#person" | jsonify }} },
       "publisher": { "@id": {{ site.url | append: "/#person" | jsonify }} },
       "mainEntityOfPage": { "@type": "WebPage", "@id": {{ canonical | jsonify }} },
+      {%- if is_annex and parent_doc %}
+      "isPartOf": [
+        { "@id": {{ parent_doc.url | absolute_url | append: "#article" | jsonify }} },
+        { "@id": {{ site.url | append: "/#website" | jsonify }} }
+      ],
+      {%- else %}
       "isPartOf": { "@id": {{ site.url | append: "/#website" | jsonify }} },
+      {%- endif %}
+      {%- if child_docs.size > 0 %}
+      "hasPart": [
+        {%- for a in child_docs %}
+        { "@type": "Article", "@id": {{ a.url | absolute_url | append: "#article" | jsonify }}, "headline": {{ a.title | jsonify }}, "url": {{ a.url | absolute_url | jsonify }} }{% unless forloop.last %},{% endunless %}
+        {%- endfor %}
+      ],
+      {%- endif %}
       "articleSection": {{ page.tags.first | default: "Essays" | jsonify }},
       "wordCount": {{ wcount }},
       "timeRequired": {{ rmin | prepend: "PT" | append: "M" | jsonify }},
@@ -131,7 +152,12 @@
       "@type": "BreadcrumbList",
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": {{ site.title | jsonify }}, "item": {{ site.url | append: "/" | jsonify }} },
+        {%- if is_annex and parent_doc %}
+        { "@type": "ListItem", "position": 2, "name": {{ parent_doc.title | jsonify }}, "item": {{ parent_doc.url | absolute_url | jsonify }} },
+        { "@type": "ListItem", "position": 3, "name": {{ page.title | jsonify }} }
+        {%- else %}
         { "@type": "ListItem", "position": 2, "name": {{ page.title | jsonify }} }
+        {%- endif %}
       ]
     }
     {%- endif -%}
@@ -147,10 +173,10 @@
 <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | absolute_url }}">
 <link rel="sitemap" type="application/xml" href="{{ '/sitemap.xml' | absolute_url }}">
 
-{%- comment -%} ---- fonts (Newsreader; system mono for small metadata) ---- {%- endcomment -%}
+{%- comment -%} ---- fonts: Big Shoulders (display), IBM Plex Serif (reading), JetBrains Mono (strip, docket, code) ---- {%- endcomment -%}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders:opsz,wght@10..72,100..900&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400;1,600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
 {%- if site.github.build_revision -%}{%- assign cssver = site.github.build_revision -%}{%- else -%}{%- assign cssver = site.time | date: '%s' -%}{%- endif -%}
 <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}?v={{ cssver }}">

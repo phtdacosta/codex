@@ -2,25 +2,30 @@
 layout: default
 title: Tags
 permalink: /tags/
+description: "Every thread through the codex, and the decrees filed under each."
 ---
-<div class="wrap">
-  <header class="page-header">
-    <h1 class="page-title">Tags</h1>
-    <p class="mono">Threads through the codex</p>
-    <div class="head-sep"></div>
-  </header>
-  {%- assign tags = site.tags | sort %}
+{%- assign tags = site.tags | sort -%}
+<section class="page" aria-labelledby="tags-title">
+  <p class="page-kicker">Threads through the codex</p>
+  <h1 class="page-title" id="tags-title">Tags</h1>
   {%- if tags.size > 0 %}
-  <div class="tagcloud">
-    {%- for tag in tags %}<a class="mono" href="#{{ tag[0] | slugify }}">#{{ tag[0] }} · {{ tag[1] | size }}</a>{% endfor %}
-  </div>
+  <ul class="tag-index">
+    {%- for tag in tags %}
+    <li><a href="#{{ tag[0] | slugify }}">{{ tag[0] }}<b>{{ tag[1] | size }}</b></a></li>
+    {%- endfor %}
+  </ul>
   {%- for tag in tags %}
-  <section class="tag-section" id="{{ tag[0] | slugify }}">
-    <h2>{{ tag[0] }}</h2>
+  {%- assign tag_slug = tag[0] | slugify %}
+  <section class="tag-section" id="{{ tag_slug }}" aria-labelledby="h-{{ tag_slug }}">
+    <h2 id="h-{{ tag_slug }}">{{ tag[0] }} <span class="n">{{ tag[1] | size }} {% if tag[1].size == 1 %}decree{% else %}decrees{% endif %}</span></h2>
     <ul class="tag-list">
-      {%- for post in tag[1] %}<li><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y" }}</time><a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>{% endfor %}
+      {%- for post in tag[1] %}
+      <li><a href="{{ post.url | relative_url }}"><span class="tl-no"><span class="sr-only">Decree </span>Nº&nbsp;{% include decree-no.html url=post.url %}</span><span class="tl-title">{{ post.title }}</span><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y·%m·%d" }}</time></a></li>
+      {%- endfor %}
     </ul>
   </section>
   {%- endfor %}
-  {%- else %}<p class="mono" style="text-align:center">No tags filed yet.</p>{%- endif %}
-</div>
+  {%- else %}
+  <p class="empty">No tags filed yet.</p>
+  {%- endif %}
+</section>

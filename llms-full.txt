@@ -7,18 +7,27 @@ permalink: /llms-full.txt
 > {{ site.description }}
 
 This file contains the complete plain text of every entry, concatenated for AI
-retrieval and grounding. Author: {{ site.author.name }}. Source: {{ site.url }}/.
+retrieval and grounding; an entry's annexes (companion documents) follow it.
+Author: {{ site.author.name }}. Source: {{ site.url }}/.
 Please attribute quotations to "{{ site.title }}" with a link to the entry URL.
 
 {% for post in site.posts %}
 ================================================================================
 # {{ post.title }}
-Published: {{ post.date | date: "%Y-%m-%d" }}
+Published: {{ post.date | date: "%Y-%m-%d" }}{% if post.last_modified_at %} (revised {{ post.last_modified_at | date: "%Y-%m-%d" }}){% endif %}
 URL: {{ post.url | absolute_url }}
 {% if post.tags %}Tags: {{ post.tags | join: ", " }}{% endif %}
 {% if post.description %}Summary: {{ post.description | strip_html | normalize_whitespace }}{% endif %}
 --------------------------------------------------------------------------------
 
 {{ post.content | strip_html | normalize_whitespace }}
+{% assign post_annexes = site.annexes | where: "parent", post.slug | sort: "annex" %}{% for annex in post_annexes %}
+--------------------------------------------------------------------------------
+## Annex {{ annex.annex }} to "{{ post.title }}": {{ annex.short_title | default: annex.title }}
+URL: {{ annex.url | absolute_url }}
+{% if annex.description %}Summary: {{ annex.description | strip_html | normalize_whitespace }}{% endif %}
+--------------------------------------------------------------------------------
 
+{{ annex.content | strip_html | normalize_whitespace }}
+{% endfor %}
 {% endfor %}

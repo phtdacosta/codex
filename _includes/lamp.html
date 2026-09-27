@@ -1,0 +1,27 @@
+{%- comment -%}
+  The lamp: a woodcut candle in a stamped circular badge, and the site's light/dark switch.
+  Pressed = lit = dark mode. The script at the end of _layouts/default.html drives it
+  (localStorage "codex-theme" + data-theme on <html>). Its gradient and ring path live in the
+  SVG defs at the top of _layouts/default.html. Styles: "the lamp" in assets/css/style.css.
+{%- endcomment -%}
+<button class="lamp" id="theme-toggle" type="button" aria-label="Lamplight" aria-pressed="false" title="Lamplight — light or dark">
+  <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+    <circle class="badge-mis" cx="32" cy="32" r="30"/>
+    <circle class="badge" cx="32" cy="32" r="30"/>
+    <text class="ring"><textPath href="#ring-o">FIAT LUX · FIAT LUX · FIAT LUX · FIAT LUX ·</textPath></text>
+    <circle class="badge-in" cx="32" cy="32" r="21.8"/>
+    <circle class="halo" cx="32" cy="21" r="15"/>
+    <g class="candle">
+      <path class="wax" d="M24.8 32.2C26.2 30.2 28.4 33.2 30.3 31.4C32.2 29.6 34 32.8 35.9 31.2C37.3 30 38.5 30.8 39.2 32.2L38.2 52.4Q32 54.3 25.8 52.4Z"/>
+      <path class="cut" d="M28.9 37v11.6" style="stroke-width:1.7"/>
+      <path class="cut" d="M32.6 38.4v7.6" style="stroke-width:1"/>
+      <path class="cut" d="M28.3 50.6h7.4" style="stroke-width:.9"/>
+      <path class="wick" d="M32 31.6V25.8"/>
+      <g class="flame"><g class="flick">
+        <path class="f-out" d="M32 28.4C26.7 24 27.3 17.4 32 11.4C36.7 17.4 37.3 24 32 28.4Z"/>
+        <path class="f-in" d="M32 26.8C29.2 23.9 29.4 19.4 32 15.6C34.6 19.4 34.8 23.9 32 26.8Z"/>
+        <ellipse class="f-core" cx="32" cy="23.8" rx="1.45" ry="2.6"/>
+      </g></g>
+    </g>
+  </svg>
+</button>

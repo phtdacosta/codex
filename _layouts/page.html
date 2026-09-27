@@ -1,13 +1,16 @@
 ---
 layout: default
 ---
-<div class="wrap">
-  <header class="page-header">
-    {%- unless page.hide_title %}<h1 class="page-title">{{ page.title }}</h1>{% endunless %}
-    {%- if page.subtitle %}<p class="mono">{{ page.subtitle }}</p>{% endif %}
-    <div class="head-sep"></div>
-  </header>
+{%- comment -%}
+  Plain pages (About, …). Front matter: title, subtitle (a small line above the title),
+  hide_title (keeps the title for screen readers and search only).
+{%- endcomment -%}
+<article class="page">
+  {%- if page.subtitle %}
+  <p class="page-kicker">{{ page.subtitle }}</p>
+  {%- endif %}
+  <h1 class="page-title{% if page.hide_title %} sr-only{% endif %}">{{ page.title }}</h1>
   <div class="prose">
     {{ content }}
   </div>
-</div>
+</article>

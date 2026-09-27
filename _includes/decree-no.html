@@ -1,0 +1,12 @@
+{%- comment -%}
+  A post's decree number, zero-padded to three digits; the oldest post is 001.
+  Pass url= (any post's url), or n= (a number you already have, e.g. forloop.rindex while looping
+  over site.posts, which lists the newest first).
+{%- endcomment -%}
+{%- assign dn_n = include.n | default: 0 | plus: 0 -%}
+{%- if include.url -%}
+  {%- for dn_post in site.posts -%}
+    {%- if dn_post.url == include.url -%}{%- assign dn_n = forloop.rindex -%}{%- break -%}{%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- if dn_n < 10 -%}00{%- elsif dn_n < 100 -%}0{%- endif -%}{{- dn_n -}}

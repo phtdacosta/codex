@@ -1,0 +1,55 @@
+---
+layout: default
+---
+{%- comment -%}
+  An annex: a companion document attached to a post (files in _annexes/, see the README).
+  Front matter: parent (the post's slug), annex (its letter), short_title (optional, the name
+  shown on the page), toc_style (optional: plain, index or numbered).
+{%- endcomment -%}
+{%- comment -%} (where with an empty value returns everything in Jekyll 3, hence the guard) {%- endcomment -%}
+{%- assign parent = nil -%}{%- assign siblings = "" | split: "" -%}
+{%- if page.parent -%}
+  {%- assign parent = site.posts | where: "slug", page.parent | first -%}
+  {%- assign siblings = site.annexes | where: "parent", page.parent | sort: "annex" -%}
+{%- endif -%}
+{%- assign toc_style = page.toc_style | default: "plain" -%}
+{%- if page.image contains "://" -%}{%- assign hero_src = page.image -%}{%- else -%}{%- assign hero_src = page.image | relative_url -%}{%- endif -%}
+{%- if parent -%}{%- capture parent_no -%}{% include decree-no.html url=parent.url %}{%- endcapture -%}{%- endif -%}
+<article class="pamphlet annex">
+  <p class="docket">Codex · Filed&nbsp;{{ page.date | date: "%Y·%m·%d" }}
+    {%- if page.last_modified_at %} · Revised&nbsp;{{ page.last_modified_at | date: "%Y·%m·%d" }}{% endif %} · {% include reading-time.html content=content %}</p>
+  <p class="post-no">{% if parent %}<span class="sr-only">Decree </span>Nº&nbsp;{{ parent_no }} · {% endif %}Annex&nbsp;{{ page.annex }}</p>
+  <h1 class="post-title">{{ page.short_title | default: page.title }}</h1>
+  {%- if parent %}
+  <p class="byline">Annex to <a href="{{ parent.url | relative_url }}">{{ parent.title }}</a></p>
+  {%- endif %}
+
+  {%- if page.image %}
+  <figure class="post-hero">
+    <span class="plate"><img src="{{ hero_src }}" alt="{{ page.image_alt | default: page.title | escape }}" width="{{ page.image_width | default: 1600 }}" height="{{ page.image_height | default: 600 }}" decoding="async"{% if page.image_priority %} fetchpriority="high"{% endif %}></span>
+    {%- if page.image_caption %}
+    <figcaption>{{ page.image_caption }}</figcaption>
+    {%- endif %}
+  </figure>
+  {%- endif %}
+
+  {% include toc.html content=content toc=page.toc style=toc_style %}
+
+  <div class="prose annex-body">
+    {{ content }}
+    <p class="end-mark" aria-hidden="true">Finis</p>
+  </div>
+
+  {%- if parent or siblings.size > 1 %}
+  <div class="post-foot">
+    <nav class="pager" aria-label="The article and its annexes">
+      {%- if parent %}
+      <a href="{{ parent.url | relative_url }}"><span class="dir">The article · Nº&nbsp;{{ parent_no }}</span><span class="ptitle">{{ parent.title }}</span></a>
+      {%- endif %}
+      {%- for sib in siblings %}{% if sib.url != page.url %}
+      <a href="{{ sib.url | relative_url }}"><span class="dir">Annex {{ sib.annex }}</span><span class="ptitle">{{ sib.short_title | default: sib.title }}</span></a>
+      {%- endif %}{% endfor %}
+    </nav>
+  </div>
+  {%- endif %}
+</article>

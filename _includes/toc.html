@@ -1,15 +1,38 @@
-{%- assign parts = include.content | split: '<h2' -%}
-{%- assign h2count = parts | size | minus: 1 -%}
-{%- if h2count >= 3 and include.toc != false -%}
-<nav class="contents" aria-label="Contents">
-  <span class="mono">Contents</span>
-  <ol>
-  {%- for chunk in parts offset: 1 -%}
-    {%- assign id = chunk | split: 'id="' | last | split: '"' | first -%}
-    {%- assign seg = chunk | split: '>' -%}
-    {%- assign text = seg[1] | split: '</h2' | first | strip_html | strip -%}
-    <li><a href="#{{ id }}">{{ text }}</a></li>
-  {%- endfor -%}
+{%- comment -%}
+  The Contents box.
+  · Sections: the <h2>s of include.content, when there are 3 or more (turn off with `toc: false`).
+  · Annexes: pass include.annexes (a post's annexes) to list them after the sections, by letter.
+  · include.style: "numbered" (default: roman numerals, like the § marks in the text),
+    "plain" (the headings carry their own numbering), or "index" (many short sections, e.g. a
+    glossary A–Z, set as a compact thumb index). Annexes choose theirs with `toc_style:`.
+{%- endcomment -%}
+{%- assign toc_parts = include.content | split: '<h2' -%}
+{%- assign toc_count = toc_parts | size | minus: 1 -%}
+{%- assign toc_sections = false -%}
+{%- if toc_count >= 3 and include.toc != false -%}{%- assign toc_sections = true -%}{%- endif -%}
+{%- assign toc_annexes = 0 -%}{%- if include.annexes -%}{%- assign toc_annexes = include.annexes.size -%}{%- endif -%}
+{%- assign toc_style = include.style | default: "numbered" -%}
+{%- if toc_sections or toc_annexes > 0 -%}
+<nav class="contents contents--{{ toc_style }}" aria-label="Contents">
+  {%- if toc_sections %}
+  <span class="meta">Contents</span>
+  <ol class="c-sections">
+  {%- for toc_chunk in toc_parts offset: 1 -%}
+    {%- assign toc_inner = toc_chunk | split: '</h2>' | first -%}
+    {%- assign toc_open = toc_inner | split: '>' | first -%}
+    {%- assign toc_id = toc_open | split: 'id="' | last | split: '"' | first -%}
+    {%- assign toc_text = toc_inner | remove_first: toc_open | remove_first: '>' | strip_html | strip %}
+    <li{% if toc_text.size == 1 %} class="is-letter"{% endif %}><a href="#{{ toc_id }}">{{ toc_text }}</a></li>
+  {%- endfor %}
   </ol>
+  {%- endif %}
+  {%- if toc_annexes > 0 %}
+  <span class="meta">Annexes</span>
+  <ol class="c-annexes">
+    {%- for toc_annex in include.annexes %}
+    <li><a href="{{ toc_annex.url | relative_url }}" data-annex="{{ toc_annex.annex }}">{{ toc_annex.short_title | default: toc_annex.title }}</a></li>
+    {%- endfor %}
+  </ol>
+  {%- endif %}
 </nav>
 {%- endif -%}
