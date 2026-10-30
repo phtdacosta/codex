@@ -21,7 +21,7 @@ So build harder, and pray harder. Acceleration ordered toward VIRTUE.
 That tension is most of what I write about.
 
 The most ambitious thing I've built so far is [Orabimus](https://orabimus.com), a place to pray the Holy Rosary online.  
-Ambitious not only on the technical side, where I pushed it to SOTA in lightweightness and performance, a web app that actually runs faster than native apps, but mostly for what it is: an extreme long-term goal of helping faithful Catholics (and why not other Christians?) pray together through the Rosary, feel less alone, more hopeful, and grow closer to God.  
+It is an extreme long-term goal of helping faithful Catholics (and why not other Christians?) pray together through the Rosary, feel less alone, more hopeful, and grow closer to God.  
 English or Latin, alone or live with people from all over the world in the same room, everyone carrying each other's intentions.  
 Free & ad-free. No investors, no sign-in.  
 It grew out of the open Rosaries I've led on X since early 2024.  

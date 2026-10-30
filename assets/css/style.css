@@ -106,7 +106,7 @@ a{color:inherit;text-decoration:none;}
        into the sheet's top-right corner (absolute, top of page, masked so it fades out before the
        reading column; it never travels with the text) ---- */
 body::before,body::after{content:"";z-index:-1;pointer-events:none;opacity:var(--lit);}
-body::before{position:fixed;inset:0;background:radial-gradient(105% 78% at 100% -8%, rgba(240,176,74,.30), rgba(229,80,47,.15) 34%, transparent 64%);
+body::before{position:absolute;top:0;left:0;right:0;height:100vh;background:radial-gradient(105% 78% at 100% -8%, rgba(240,176,74,.30), rgba(229,80,47,.15) 34%, transparent 64%);
   animation:var(--anim-aura) 7.5s ease-in-out infinite;}
 body::after{position:absolute;top:0;right:0;width:min(100%,60rem);height:clamp(16rem,48vh,34rem);
   background:radial-gradient(circle, rgba(255,208,112,.7) 0 1.05px, transparent 1.55px) 0 0/7px 7px;
@@ -365,7 +365,7 @@ a.reversefootnote{text-decoration:none;}
   .lamp{top:.45rem;right:.85rem;width:58px;height:58px;}
 }
 @media (min-width:64rem){
-  .lamp{position:fixed;top:.75rem;right:1.25rem;}
+  .lamp{position:absolute;top:.75rem;right:1.25rem;}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto;}
